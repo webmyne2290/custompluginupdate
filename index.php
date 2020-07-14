@@ -8,6 +8,42 @@ author: Webmyne
 Author URI: http://www.webmyne.com/
 */
 
+/* Start code at Update Plugin */
+
+add_action( 'init', 'github_plugin_updater_test_init' );
+
+function github_plugin_updater_test_init() {
+
+	include_once 'updater.php';
+
+	define( 'WP_GITHUB_FORCE_UPDATE', true );
+
+	if ( is_admin() ) { // note the use of is_admin() to double check that this is happening in the admin
+
+		$config = array(
+			'slug' => plugin_basename( __FILE__ ),
+			'proper_folder_name' => 'git-plugin-update-now',
+			'api_url' => 'https://api.github.com/repos/ajaywebmyne/custompluginupdate',
+			'raw_url' => 'https://raw.github.com/ajaywebmyne/custompluginupdate/master',
+			'github_url' => 'https://github.com/ajaywebmyne/custompluginupdate',
+			'zip_url' => 'https://github.com/ajaywebmyne/custompluginupdate/archive/master.zip',
+			'sslverify' => false,
+			'requires' => '3.8.1',
+			'tested' => '5.3.2',
+			'readme' => 'README.md',
+			'access_token' => 'c93e35f3c225c26ab85532d3746442944e78126b',
+		);
+
+		//echo "<pre>";print_r($config);exit;
+
+		new WP_GitHub_Updater( $config );
+
+	}
+
+}
+
+/* End code at Update Plugin */
+
 function register_my_custom_menu_page()
 {
     add_menu_page( 
@@ -35,7 +71,7 @@ function customdata_new()
 			$dbpwd = get_option('oscimp_dbpwd');
 			$prod_img_folder = get_option('oscimp_prod_img_folder');
 			$store_url = get_option('oscimp_store_url');
-			$updateverson="2.0";
+			$updateverson="6.0";
 		?>
 		 
 		<form name="oscimp_form" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
